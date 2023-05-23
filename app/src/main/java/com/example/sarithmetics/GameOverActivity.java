@@ -16,9 +16,10 @@ public class GameOverActivity extends AppCompatActivity implements View.OnClickL
     // Declare buttons for accessing different activities
     private Button playagainButton, gobackButton;
     private ImageView settings;
-    private TextView txtScore;
+    private TextView txtScore, txtHighScore;
     private int lastQuestion, maxLives, maxDuration;
     private boolean isAdditionEnabled, isSubtractionEnabled, isMultiplicationEnabled, isDivisionEnabled;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,16 @@ public class GameOverActivity extends AppCompatActivity implements View.OnClickL
         playagainButton = findViewById(R.id.playagain_button);
         gobackButton = findViewById(R.id.goback_button);
         txtScore = findViewById(R.id.txtScore);
+        txtHighScore = findViewById(R.id.txtHighScore);
         playagainButton.setOnClickListener(this);
         gobackButton.setOnClickListener(this);
 
         lastQuestion = getIntent().getIntExtra("lastQuestion", 0);
         txtScore.setText(String.valueOf(lastQuestion));
+        score = lastQuestion;
+        if(score > Integer.parseInt(txtHighScore.getText().toString())){
+            txtHighScore.setText(String.valueOf(lastQuestion));
+        }
 
         Intent intent = getIntent();
         isAdditionEnabled = intent.getBooleanExtra("isAddEnabled", false);
@@ -62,11 +68,13 @@ public class GameOverActivity extends AppCompatActivity implements View.OnClickL
                     intent.putExtra("hearts", maxLives);
                     intent.putExtra("time", maxDuration);
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     break;
                 case R.id.goback_button:
                     // Go to Shop activity
                     intent = new Intent(this, PracticeActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     break;
                 case R.id.settings_button:
                     // Go to Practice activity

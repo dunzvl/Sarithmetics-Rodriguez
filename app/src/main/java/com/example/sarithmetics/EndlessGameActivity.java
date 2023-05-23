@@ -249,6 +249,8 @@ public class EndlessGameActivity extends AppCompatActivity implements View.OnCli
         editor.putBoolean("isInfinite", infiCheck);
         editor.putBoolean("isVigor", isVigor);
         editor.putBoolean("isSafeguard", isSafeguard);
+        editor.putBoolean("isMystery", isMystery);
+        editor.putString("hiddenAnswer", hiddenAnswer);
         // Save any other relevant game data
 
         // Commit the changes
@@ -280,6 +282,8 @@ public class EndlessGameActivity extends AppCompatActivity implements View.OnCli
                 infiCheck = sharedPreferences.getBoolean("isInfinite", false);
                 isVigor = sharedPreferences.getBoolean("isVigor", false);
                 isSafeguard = sharedPreferences.getBoolean("isSafeguard", false);
+                isMystery = sharedPreferences.getBoolean("isMystery", false);
+                hiddenAnswer = sharedPreferences.getString("hiddenAnswer", "0");
                 isAdditionEnabled = sharedPreferences.getBoolean("isAdd", false);
                 isSubtractionEnabled = sharedPreferences.getBoolean("isSub", false);
                 isMultiplicationEnabled = sharedPreferences.getBoolean("isMul", false);
@@ -511,8 +515,10 @@ public class EndlessGameActivity extends AppCompatActivity implements View.OnCli
                 checkAnswerWithSafeguard(selectedAnswer);
             } else if (isMystery) {
                 checkAnswer(selectedAnswer);
+            } else if (safeguardEnable) {
+                    checkAnswerWithSafeguard(selectedAnswer);
             } else {
-                checkAnswerWithSafeguard(selectedAnswer);
+                checkAnswer(selectedAnswer);
             }
 
         }
